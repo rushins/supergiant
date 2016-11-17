@@ -1,6 +1,8 @@
 package gce
 
 import (
+	"strings"
+
 	"github.com/supergiant/supergiant/pkg/core"
 	"github.com/supergiant/supergiant/pkg/kubernetes"
 	"github.com/supergiant/supergiant/pkg/model"
@@ -22,21 +24,11 @@ func (p *Provider) ValidateAccount(m *model.CloudAccount) error {
 		return err
 	}
 
-	_, err = client.Projects.Get(m.Credentials["project_id"]).Do()
+	// find the core os image.
+	_, err = client.Images.GetFromFamily("coreos-cloud", "coreos-stable").Do()
 	if err != nil {
 		return err
 	}
-	return nil
-}
-
-// CreateKube creates a new DO kubernetes cluster.
-func (p *Provider) CreateKube(m *model.Kube, action *core.Action) error {
-	return nil
-}
-
-// DeleteKube deletes a DO kubernetes cluster.
-func (p *Provider) DeleteKube(m *model.Kube, action *core.Action) error {
-	// Initialize steps
 	return nil
 }
 
@@ -128,4 +120,9 @@ func Client(kube *model.Kube) (*compute.Service, error) {
 		return nil, err
 	}
 	return computeService, nil
+}
+
+func convInstanceURLtoString(url string) string {
+	split := strings.Split(url, "/")
+	return split[len(split)-1]
 }

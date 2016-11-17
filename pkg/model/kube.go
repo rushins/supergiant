@@ -50,6 +50,9 @@ type Kube struct {
 	OpenStackConfig     *OSKubeConfig `json:"openstack_config,omitempty" gorm:"-" sg:"store_as_json_in=OpenStackConfigJSON,immutable"`
 	OpenStackConfigJSON []byte        `json:"-"`
 
+	GCEConfig     *GCEKubeConfig `json:"gce_config,omitempty" gorm:"-" sg:"store_as_json_in=GCEConfigJSON,immutable"`
+	GCEConfigJSON []byte         `json:"-"`
+
 	MasterPublicIP string `json:"master_public_ip" sg:"readonly"`
 
 	Ready bool `json:"ready" sg:"readonly" gorm:"index"`
@@ -107,5 +110,9 @@ type OSKubeConfig struct {
 
 // GCEKubeConfig holds do specific information about DO based KUbernetes clusters.
 type GCEKubeConfig struct {
-	AccountJson map[string]string `json:"account_json" validate:"nonzero"`
+	Zone                string   `json:"zone" validate:"nonzero"`
+	MasterInstanceGroup string   `json:"instance_group" sg:"readonly"`
+	MinionInstanceGroup string   `json:"instance_group" sg:"readonly"`
+	MasterNodes         []string `json:"master_nodes" sg:"readonly"`
+	KubeMasterCount     int      `json:"kube_master_count"`
 }

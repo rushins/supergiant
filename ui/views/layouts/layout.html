@@ -1,63 +1,223 @@
-{{ define "layout" }}
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <title>
-        {{ .title }}
-      </title>
+{{ define "layout" }}<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+      {{ .title }}
+    </title>
 
-      <link rel="shortcut icon" href="/ui/assets/img/favicon.ico" type="image/x-icon">
-      <link rel="icon" href="/ui/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/ui/assets/img/favicon32.ico" type="image/x-icon">
+    <link rel="icon" href="/ui/assets/img/favicon32.ico" type="image/x-icon">
 
-      <!-- Vendor -->
-      <script src="/ui/assets/js/vendor/jquery-3.1.0.min.js"></script>
+    <!-- Vendor -->
+    <script src="/ui/assets/js/vendor/jquery-3.1.0.min.js"></script>
 
-      <!-- Font -->
-      <link href="/ui/assets/fonts/Montserrat-Regular.ttf" rel="stylesheet">
-      <link href="/ui/assets/fonts/OpenSans-Regular.ttf" rel="stylesheet">
-      <link href="/ui/assets/fonts/OpenSans-Semibold.ttf" rel="stylesheet">
+    <!-- Supergiant main styles -->
+    <link rel="stylesheet" href="/ui/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/ui/assets/css/main.css">
 
-      <!-- Supergiant main styles -->
-      <link rel="stylesheet" href="/ui/assets/css/main.css">
+    <!-- Supergiant main JavaScript -->
+    <script src="/ui/assets/js/main.js"></script>
+    <script src="/ui/assets/js/modal.js"></script>
+    <script src="/ui/assets/js/dropdown.js"></script>
 
-      <!-- Supergiant main JavaScript -->
-      <script src="/ui/assets/js/main.js"></script>
-      <script src="/ui/assets/js/modal.js"></script>
-      <script src="/ui/assets/js/dropdown.js"></script>
+  </head>
+  <body>
 
-    </head>
-    <body>
+    <div id="container" class="app-layout">
 
-      <div id="container">
+      <div id="sidebar" class="app-navigation">
 
-        <div id="sidebar">
+        <a href="/" id="logo">
+          Supergiant
+        </a>
 
-          <a href="/" id="logo">
-            Supergiant
-          </a>
+        <nav id="nav" rel="nav">
 
-          <div id="nav">
-            <a class='{{ if eq .title "Sessions" }}active{{ end }}' href="/ui/sessions">Sessions</a>
-            <a class='{{ if eq .title "Users" }}active{{ end }}' href="/ui/users">Users</a>
-            <a class='{{ if eq .title "Cloud Accounts" }}active{{ end }}' href="/ui/cloud_accounts">Cloud Accounts</a>
-            <a class='{{ if eq .title "Kubes" }}active{{ end }}' href="/ui/kubes">Kubes</a>
-            <a class='{{ if eq .title "Nodes" }}active{{ end }}' href="/ui/nodes">Nodes</a>
-            <a class='{{ if eq .title "Entrypoints" }}active{{ end }}' href="/ui/entrypoints">Entrypoints</a>
-            <a class='{{ if eq .title "Entrypoint Listeners" }}active{{ end }}' href="/ui/entrypoint_listeners">Listeners</a>
-            <a class='{{ if eq .title "Volumes" }}active{{ end }}' href="/ui/volumes">Volumes</a>
-            <a class='{{ if eq .title "Kube Resources" }}active{{ end }}' href="/ui/kube_resources">Kube Resources</a>
-          </div>
+          <ul>
+            <li>
+              <a class='{{ if eq .title "Sessions" }}active{{ end }}' href="/ui/sessions"><i class="fa fa-clock-o"></i> Sessions</a>
+            </li>
+            <li>
+              <a class='{{ if eq .title "Users" }}active{{ end }}' href="/ui/users"><i class="fa fa-user"></i> Users</a>
+            </li>
+            <li>
 
-        </div>
+              <a class='{{ if eq .title "Cloud Accounts" }}active{{ end }}' href="/ui/cloud_accounts"><i class="fa fa-cloud"></i>  Cloud Accounts</a>
 
-        <div id="content">
-          {{ template "body" . }}
-        </div>
+              <label class="toggle-menu">
+                <input type="radio" name="toggle-menu" aria-hidden="true" autocomplete="off" tabindex="-1">
+
+                <menu>
+                  <label>New Cloud Account</label>
+                  <menuitem><a href="/ui/cloud_accounts/new?option=aws">AWS</a></menuitem>
+                  <menuitem><a href="/ui/cloud_accounts/new?option=digitalocean">DigitalOcean</a></menuitem>
+                  <menuitem><a href="/ui/cloud_accounts/new?option=openstack">OpenStack</a></menuitem>
+                </menu>
+              </label>
+
+            </li>
+            <li>
+
+              <a class='{{ if eq .title "Kubes" }}active{{ end }}' href="/ui/kubes"><i class="fa fa-cube"></i> Kubes</a>
+
+              <label class="toggle-menu">
+                <input type="radio" name="toggle-menu" aria-hidden="true" autocomplete="off" tabindex="-1">
+
+                <menu>
+                  <label>New Kube</label>
+                  <menuitem><a href="/ui/kubes/new?option=aws">AWS</a></menuitem>
+                  <menuitem><a href="/ui/kubes/new?option=digitalocean">DigitalOcean</a></menuitem>
+                  <menuitem><a href="/ui/kubes/new?option=openstack">OpenStack</a></menuitem>
+                </menu>
+              </label>
+
+            </li>
+            <li>
+              <a class='{{ if eq .title "Nodes" }}active{{ end }}' href="/ui/nodes"><i class="fa fa-server"></i> Nodes</a>
+            </li>
+            <li>
+              <a class='{{ if eq .title "Entrypoints" }}active{{ end }}' href="/ui/entrypoints"><i class="fa fa-cloud-download"></i> Entrypoints</a>
+            </li>
+            <li>
+              <a class='{{ if eq .title "Entrypoint Listeners" }}active{{ end }}' href="/ui/entrypoint_listeners"><i class="fa fa-cloud-upload"></i> Listeners</a>
+            </li>
+            <li>
+              <a class='{{ if eq .title "Volumes" }}active{{ end }}' href="/ui/volumes"><i class="fa fa-database"></i> Volumes</a>
+            </li>
+            <li>
+
+              <a class='{{ if eq .title "Kube Resources" }}active{{ end }}' href="/ui/kube_resources"><i class="fa fa-list"></i> Kube Resources</a>
+
+              <label class="toggle-menu">
+                <input type="radio" name="toggle-menu" aria-hidden="true" autocomplete="off" tabindex="-1">
+
+                <menu>
+                  <label>New Kube Resource</label>
+                  <menuitem><a href="/ui/kube_resources/new?option=pod">Pod</a></menuitem>
+                  <menuitem><a href="/ui/kube_resources/new?option=service">Service</a></menuitem>
+                  <menuitem><a href="/ui/kube_resources/new?option=other">Other</a></menuitem>
+                </menu>
+              </label>
+
+            </li>
+            <li>
+              <a class='{{ if eq .title "Apps" }}active{{ end }}' href="/ui/apps"><i class="fa fa-gear"></i> Apps</a>
+            </li>
+          </ul>
+
+        </nav>
+
+        <script>
+          // .toggle-menu classes use pure CSS and hidden radio buttons to
+          // ensure only one dropdown or toggle menu is open at a time.
+          //
+          // When the document body is clicked outside of an open toggle menu,
+          // this script uses vanilla JS to emulate desktop menu bhavior,
+          // "unchecking" the radio input of the open .toggle-menu and closing
+          // the menu.
+          var toggleMenuCollapser = function(e) {
+            var targ     = e.target;
+            var selector = '.toggle-menu, .toggle-menu *';
+            var toggles  = document.querySelectorAll('.toggle-menu > input:checked');
+
+            // Most browsers will have Element.matches(). This fn iterates over
+            // early vendor implementations for legacy support.
+            var matches  = function(targ, selector) {
+              if (
+                (Element.prototype.matches && targ.matches(selector)) ||
+                (Element.prototype.matchesSelector && targ.matchesSelector(selector)) ||
+                (Element.prototype.mozMatchesSelector && targ.mozMatchesSelector(selector)) ||
+                (Element.prototype.msMatchesSelector && targ.msMatchesSelector(selector)) ||
+                (Element.prototype.oMatchesSelector && targ.oMatchesSelector(selector)) ||
+                (Element.prototype.webkitMatchesSelector && targ.webkitMatchesSelector(selector))
+              ) {
+                return true;
+              }
+
+              return false;
+            };
+
+            if(!matches(targ, selector)) {
+              for(var i = 0; i < toggles.length; i++) {
+                toggles[i].checked = false;
+              }
+            }
+          };
+
+          document.addEventListener('click', toggleMenuCollapser);
+        </script>
 
       </div>
 
-    </body>
-  </html>
+      <div id="content" class="app-content">
+        {{ template "body" . }}
+      </div>
+
+    </div>
+
+    <!-- Confirm Action Modal -->
+    <div class="modal fade" id="confirm_action" tabindex="-1" role="dialog" aria-labelledby="confirmAction">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="confirmAction">Are you sure?</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              You are about to <strong id="modal_action_name" class="text-info"></strong> the following items:
+            </p>
+            <ul id="modal_list"></ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirm_action_btn"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Options Modal -->
+    <div class="modal fade" id="new_options" tabindex="-1" role="dialog" aria-labelledby="newOption">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="newOption">Select an option</h4>
+          </div>
+          <div class="modal-body">
+
+            <select class="form-control input-lg" onchange="window.location.href = '{{ .uiBasePath }}/new?option=' + $(this).val()">
+              <option disabled selected value> -- </option>
+              {{ range $key, $val := .newOptions }}
+                <option value="{{ $key }}">{{ $val }}</option>
+              {{ end }}
+            </select>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Log Modal -->
+    <div class="modal fade" id="system" tabindex="-1" role="dialog" aria-labelledby="system">
+      <div class="modal-dialog" role="document" style="width: 80%">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="system">Supergiant {{ .supergiantVersion }}</h4>
+          </div>
+          <div class="modal-body">
+
+            <div id="log"></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
 {{ end }}
 
 // We define empty blocks for optional content so we don't have to define a block in child templates that don't need them

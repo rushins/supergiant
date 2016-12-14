@@ -41,7 +41,7 @@ SUPERGIANT: Easy container orchestration using Kubernetes
 <!-- [Swagger API Widget]: http://online.swagger.io/validator?url=http://swagger.supergiant.io/api-docs -->
 <!-- [Swagger URL]: http://swagger.supergiant.io/docs/ -->
 
-### <img src="http://supergiant.io/img/logo_dark.svg" width="400">
+### <img src="http://supergiant.io/img/logo-dark.svg" width="400">
 
 [![GoReportCard Widget]][GoReportCard URL] [![GoDoc Widget]][GoDoc URL] [![Travis Widget]][Travis URL] [![Release Widget]][Release URL] [![Coverage Status Widget]][Coverage Status]
 

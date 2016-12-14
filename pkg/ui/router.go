@@ -134,6 +134,8 @@ func NewRouter(c *core.Core, baseRouter *mux.Router) *mux.Router {
 	r.HandleFunc("/entrypoint_listeners", restrictedHandler(c, ListEntrypointListeners)).Methods("GET")
 	r.HandleFunc("/entrypoint_listeners/{id}", restrictedHandler(c, GetEntrypointListener)).Methods("GET")
 
+	r.HandleFunc("/apps", restrictedHandler(c, ListApps)).Methods("GET")
+
 	return baseRouter
 }
 

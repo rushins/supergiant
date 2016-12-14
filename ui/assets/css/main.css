@@ -1,6 +1,108 @@
-html, body, #container, #sidebar, #content {
+/* Fonts */
+@font-face {
+  font-family: 'Hind';
+  src: local("HindLight"),
+       local("Hind Light"),
+       url('../fonts/hind-light.woff') format('woff');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Hind';
+  src: local("Hind"),
+       local("HindRegular"),
+       local("Hind-Regular"),
+       url('../fonts/hind-regular.woff') format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Hind';
+  src: local("Hind Medium"),
+       local("HindMedium"),
+       local("Hind-Medium"),
+       url('../fonts/hind-medium.woff') format('woff');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Hind';
+  src: local("Hind Semibold"),
+       local("HindSemibold"),
+       local("Hind-Semibold"),
+       url('../fonts/hind-semibold.woff') format('woff');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Hind';
+  src: local("Hind Bold"),
+       local("HindBold"),
+       local("Hind-Bold"),
+       url('../fonts/hind-bold.woff') format('woff');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local("Montserrat Light"),
+       local("MontserratLight"),
+       local("Montserrat-Light"),
+       url('../fonts/montserrat-light.woff') format('woff');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local("Montserrat"),
+       local("MontserratRegular"),
+       local("Montserrat-Regular"),
+       url('../fonts/montserrat-regular.woff') format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local("Montserrat Semibold"),
+       local("MontserratSemibold"),
+       local("Montserrat-Semibold"),
+       url('../fonts/montserrat-semibold.woff') format('woff');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local("Montserrat Bold"),
+       local("MontserratBold"),
+       local("Montserrat-Bold"),
+       url('../fonts/montserrat-bold.woff') format('woff');
+  font-weight: 700;
+}
+
+
+/* HTML Styles */
+
+::-webkit-scrollbar {
+  background: rgba(0,0,0,0);
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(128,128,128,0.33);
+  border-radius: 1em;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 0 1px rgba(255,255,255,0.3) inset;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0,0,0,0);
+}
+
+html, body {
   height: 100%;
   margin: 0;
+  background: #f2f1f7;
+  overflow: hidden;
 }
 
 a, a:visited {
@@ -9,8 +111,9 @@ a, a:visited {
 }
 
 body, input {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Hind', sans-serif;
   font-size: 13px;
+  font-weight: 400;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -18,6 +121,8 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
+
+/* Layout Elements */
 
 .form-control {
   display: block;
@@ -36,100 +141,220 @@ h1, h2, h3, h4, h5, h6 {
   box-sizing: border-box;
 }
 
-
-
-#container {
-  /*display: table;*/
-  /*position: absolute;*/
+.app-layout {
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  left: 0;
+  overflow-y: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
-
-#sidebar, #content {
-  /*display: table-cell;*/
-  box-sizing: border-box;
-  /*vertical-align: top;*/
-}
-
-#sidebar {
-  width: 250px;
-  border-right: 1px solid #ddd;
-
-  float: left;
-  overflow-y: hidden;
-}
-
-#content {
-  /*width: 100%;*/
-  background: #f2f1f7;
-
-  margin-left: 250px;
-
-}
+  .app-navigation {
+    background: #fff;
+    border-right: 1px solid #ddd;
+    box-sizing: border-box;
+    position: relative;
+    width: 250px;
+    z-index: 2;
+    flex: none;
+    order: 1;
+  }
+  .app-content {
+    background: #f2f1f7;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 100%;
+    left: 250px;
+    order: 2;
+    position: fixed;
+    right: 0;
+    top: 0;
+  }
+    .app-content-control {
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      box-sizing: border-box;
+      flex: none;
+      min-height: 60px;
+      min-width: 559px;
+      order: 1;
+      padding: 0 0.5em;
+    }
+    .app-content-resources {
+      background: #413e50;
+      box-shadow: 0 1px 7px rgba(0,0,0,0.1) inset;
+      color: #fff;
+      display: block;
+      flex: none;
+      max-height: 0;
+      order: 2;
+      overflow-x: hidden;
+      overflow-y: auto;
+      transition: max-height .5s;
+    }
+    .app-content-resources.visible {
+      max-height: 50%;
+    }
+    .app-content-main {
+      flex: 100%;
+      order: 3;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+      .app-content-table {}
+      .app-content-nav {}
 
 #logo {
+  background: url(../img/supergiant.svg) no-repeat;
+  background-position: 60px 50%;
+  background-size: 130px auto;
   display: block;
   height: 160px;
   text-indent: -9999px;
-  background: url(/ui/assets/img/supergiant.svg) no-repeat;
-  background-size: 130px auto;
-  background-position: center;
 }
 
-#nav a {
+#nav {}
+#nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#nav li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+
+#nav li > a,
+#nav li > a:visited {
   font-family: 'Montserrat', sans-serif;
   color: #595959;
   font-size: 13px;
   display: block;
-  padding: 13px 59px;
+  padding: 13px 0 13px 60px;
   border-top: 1px solid #ddd;
+  background: #fff;
 }
 
-#nav a:hover, #nav a:active {
-  background: #fafafa;
+#nav a:hover,
+#nav a:focus,
+#nav a:active {
+  background: rgba(0,0,0,0.05);
 }
 
-#nav a.active {
+#nav li > a.active {
   background: #0e6ccc;
   color: white;
 }
 
-#nav a:last-child {
+#nav li:last-child > a {
   border-bottom: 1px solid #ddd;
 }
 
-
-
-
-#control-bar {
-  background: #f3f3f3;
-  border-bottom: 1px solid #ddd;
-  min-width: 559px;
+#nav li > a > i.fa {
+  display: block;
+  margin: 2px 0 0 -20px;
+  opacity: 0.4;
+  position: absolute;
+  text-align: center;
+  width: 1em;
 }
+
+#nav .toggle-menu {
+  cursor: pointer;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 24px;
+}
+#nav .toggle-menu:hover,
+#nav .toggle-menu:focus {
+  background: rgba(0,0,0,0.05);
+}
+#nav li > a.active + .toggle-menu::before {
+  color: rgba(255,255,255,0.33);
+}
+#nav li > a.active + .toggle-menu:hover,
+#nav li > a.active + .toggle-menu:focus {
+  background: rgba(255,255,255,0.2);
+}
+#nav .toggle-menu::before {
+  content: "\f054";
+  display: block;
+  font-family: "FontAwesome";
+  line-height: 45px;
+  text-align: center;
+  color: rgba(0,0,0,0.2);
+  font-size: .67em;
+}
+
+#nav .toggle-menu > input[type="radio"] {
+  display: none;
+}
+#nav .toggle-menu > menu {
+  background: rgba(255,255,255,0.93);
+  box-shadow: 0 4px 7px rgba(0,0,0,0.1);
+  font-family: "Montserrat", sans-serif;
+  left: 24px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 1px;
+  width: 200px;
+}
+
+#nav .toggle-menu > input[type="radio"] ~ menu {
+  display: none;
+}
+#nav .toggle-menu > input[type="radio"]:checked ~ menu {
+  display: block;
+}
+
+#nav .toggle-menu > menu label {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  display: block;
+  font-weight: 300;
+  padding: 13px 10px;
+}
+#nav .toggle-menu > menu menuitem a {
+  color: #595959;
+  display: block;
+  padding: 10px;
+}
+#nav .toggle-menu > menu menuitem a:hover,
+#nav .toggle-menu > menu menuitem a:focus {
+  background: rgba(0,0,0,0.05);
+}
+
+
 
 a#new::after {
   content: "+";
   font-size: 17px;
-  line-height: 0;
-  position: relative;
   left: 8px;
-  top: 2px;
+  line-height: 0;
   padding-right: 3px;
+  position: relative;
+  top: 2px;
 }
 
 
 
 button.dropdown-toggle::after {
-  content: '';
-  background: url(/ui/assets/img/dropdown-caret.svg) no-repeat;
-  background-size: 11px;
-  display: inline-block;
-  background-position: center;
-  height: 6px;
-  width: 10px;
-  position: relative;
-  left: 6px;
-  top: -1px;
-  padding-right: 3px;
+  content: "\f078";
+  font-family: "FontAwesome";
+  font-size: 0.85em;
+  margin-left: 0.5em;
   opacity: 0.7;
+  position: relative;
+  top: -0.15em;
 }
 
 
@@ -163,6 +388,7 @@ button {
   border: none;
 }
 
+.btn.btn-primary:focus,
 .btn.btn-primary:hover {
   background: #0d61b7;
 }
@@ -181,6 +407,7 @@ button {
   color: #4e4e4e;
 }
 
+.btn.btn-default:focus,
 .btn.btn-default:hover {
   background: #ebebeb;
 }
@@ -228,6 +455,7 @@ ul.dropdown-menu li a {
   white-space: nowrap;
 }
 
+ul.dropdown-menu li a:focus,
 ul.dropdown-menu li a:hover {
   background-color: rgba(0,0,0,0.05);
 }
@@ -247,15 +475,7 @@ ul.dropdown-menu .divider {
 
 
 
-
-
-#item_list_container {
-  height: calc(100% - 61px);
-  overflow-y: scroll;
-}
-
 table#item_list {
-  margin-top: -1px;
   min-width: 600px;
   width: 100%;
   table-layout: fixed;
@@ -293,7 +513,9 @@ table#item_list td {
   padding: 18px 0;
 }
 
-table#item_list a:hover, table#item_list a:active {
+table#item_list a:focus,
+table#item_list a:hover,
+table#item_list a:active {
   color: #0e6ccc;
   text-decoration: underline;
 }
@@ -321,7 +543,8 @@ input[type=checkbox] {
   left: -2px;
 }
 
-.checkbox:hover {
+.checkbox:hover,
+.checkbox:focus {
   border: 1px solid #9c9c9c;
 }
 
@@ -360,11 +583,11 @@ input[type=checkbox] {
 
 
 input#searchbar {
-  height: 30px;
-  width: 300px;
   background: none;
   border: none;
+  height: 30px;
   padding-left: 10px;
+  width: 300px;
 }
 
 input#searchbar:focus {
@@ -374,14 +597,19 @@ input#searchbar:focus {
 #searchbar-icon {
   border-left: 1px solid #e0e0e0;
   display: inline-block;
-  height: 16px;
-  width: 16px;
-  background: url(/ui/assets/img/magnifier.svg) no-repeat;
-  background-size: 16px auto;
+  height: 32px;
+  line-height: 31px;
   padding-left: 14px;
-  background-position-x: 14px;
   position: relative;
-  top: 4px;
+  text-align: right;
+  vertical-align: middle;
+  width: 32px;
+}
+#searchbar-icon::before {
+  color: #bbb;
+  content: "\f002";
+  font-family: "FontAwesome";
+  font-size: 16px;
 }
 
 
@@ -422,8 +650,8 @@ input#searchbar:focus {
   left: 7px;
 }
 
-.search-filter .close:hover,
-.search-filter .close:focus {
+.search-filter .close:focus,
+.search-filter .close:hover {
   color: white;
   text-decoration: none;
   cursor: pointer;
@@ -496,8 +724,8 @@ input#searchbar:focus {
   filter: alpha(opacity=20);
   opacity: .2;
 }
-.close:hover,
-.close:focus {
+.close:focus,
+.close:hover {
   color: #000;
   text-decoration: none;
   cursor: pointer;
@@ -506,12 +734,201 @@ input#searchbar:focus {
 }
 button.close {
   -webkit-appearance: none;
-  padding: 0;
-  cursor: pointer;
   background: transparent;
   border: 0;
+  cursor: pointer;
+  padding: 0;
 }
 
+
+
+
+
+.page-header {
+  text-align: center;
+  color: #fff;
+}
+.page-header h1 {
+  font-size: 3em;
+  font-weight: 300;
+  margin: 0;
+}
+.page-header p {
+  font-size: 1.33em;
+  font-weight: 300;
+  line-height: 1;
+  margin: 1em 0;
+  color: rgba(255,255,255,0.67)
+}
+
+
+
+
+
+/* Particular Pages */
+
+.login-layout {
+  background: #413e50;
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.login-form {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.login-form form {
+  background: rgba(255,255,255,0.1);
+  margin: 0 auto;
+  max-width: 300px;
+  text-align: left;
+}
+
+
+
+.palette {
+  padding: 1em;
+}
+.palette section {
+  margin: 1.5em 0;
+}
+.palette section::after {
+  clear: both;
+  content: "";
+  display: block;
+  visibility: hidden;
+}
+.palette section header {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.5em;
+  text-align: center;
+}
+.palette section header h3 {
+  color: rgba(255,255,255,0.5);
+  font-size: 1.5em;
+  font-weight: 300;
+  margin: 0;
+}
+
+.palette-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.palette-list li {
+  box-sizing: border-box;
+  float: left;
+  list-style: none;
+  margin: 0;
+  min-height: 1em;
+  padding: 1em 1em 1em 0;
+  vertical-align: top;
+  width: 20%;
+}
+.palette-list li + li {
+  padding-left: 1em;
+}
+
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 767px) {
+  .palette-list li {
+    width: 50%;
+  }
+  .palette-list li:nth-child(2n) {
+    padding-right: 0;
+  }
+  .palette-list li:nth-child(2n+1) {
+    clear: both;
+    padding-left: 0;
+  }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .palette-list li {
+    width: 33.33%;
+  }
+  .palette-list li:nth-child(3n) {
+    padding-right: 0;
+  }
+  .palette-list li:nth-child(3n+1) {
+    clear: both;
+    padding-left: 0;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1279px) {
+  .palette-list li {
+    width: 25%;
+  }
+  .palette-list li:nth-child(4n) {
+    padding-right: 0;
+  }
+  .palette-list li:nth-child(4n+1) {
+    clear: both;
+    padding-left: 0;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1280px) {
+  .palette-list li {
+    width: 20%;
+  }
+  .palette-list li:nth-child(5n) {
+    padding-right: 0;
+  }
+  .palette-list li:nth-child(5n+1) {
+    clear: both;
+    padding-left: 0;
+  }
+}
+
+.palette-list li a {
+  background-color: rgba(255,255,255,0.05);
+  background-position: 50% 1em;
+  background-repeat: no-repeat;
+  background-size: 80% 45px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  color: rgba(255,255,255,0.8);
+  display: block;
+  font-family: Montserrat, sans-serif;
+  font-size: 1.3em;
+  padding: 70px 1.5em 1.5em;
+  position: relative;
+  text-align: center;
+}
+.palette-list li a.app-custom::before {
+  content: "\f055";
+  font-family: FontAwesome;
+  font-size: 50px;
+  left: 0;
+  opacity: 0.33;
+  position: absolute;
+  top: 16px;
+  width: 100%;
+}
+.palette-list li a::after {
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+  content: "";
+  display: block;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.5s;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+.palette-list li a:focus::after,
+.palette-list li a:hover::after {
+  opacity: 1;
+}
 
 
 
@@ -817,6 +1234,7 @@ ul#mini-nav li a {
   text-decoration: underline;
 }
 
+ul#mini-nav li a:focus,
 ul#mini-nav li a:hover {
   color: #444;
 }

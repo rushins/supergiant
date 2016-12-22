@@ -27,6 +27,12 @@ write_files:
           chmod +x /opt/bin/kubectl
         fi
       fi
+
+      ## Install Tiller ##
+      wget https://kubernetes-helm.storage.googleapis.com/helm-v2.1.0-linux-amd64.tar.gz
+      tar -xvf helm-v2.1.0-linux-amd64.tar.gz
+      ./linux-amd64/helm init
+
       openssl genrsa -out /etc/kubernetes/ssl/ca-key.pem 2048
       openssl req -x509 -new -nodes -key /etc/kubernetes/ssl/ca-key.pem -days 10000 -out /etc/kubernetes/ssl/ca.pem -subj "/CN=kube-ca"
       sed -e "s/\${MASTER_HOST}/`curl ipinfo.io/ip`/" < /etc/kubernetes/ssl/openssl.cnf.template > /etc/kubernetes/ssl/openssl.cnf.public

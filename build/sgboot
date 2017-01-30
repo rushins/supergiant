@@ -94,6 +94,12 @@ cat > /etc/supergiant.json <<- EOM
       {"name": "n1-standard-2", "ram_gib": 7.5, "cpu_cores": 2},
       {"name": "n1-standard-4", "ram_gib": 15, "cpu_cores": 4},
       {"name": "n1-standard-8", "ram_gib": 30, "cpu_cores": 8}
+    ],
+    "azure": [
+      {"name": "DS1_V2", "ram_gib": 3.5, "cpu_cores": 1},
+      {"name": "DS2_V2", "ram_gib": 7, "cpu_cores": 2},
+      {"name": "DS3_V2", "ram_gib": 14, "cpu_cores": 4},
+      {"name": "DS4_V2", "ram_gib": 28, "cpu_cores": 8}
     ]
   }
 }

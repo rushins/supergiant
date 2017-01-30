@@ -105,6 +105,10 @@ type GcePersistentDisk struct {
 	FSType string `json:"fsType"`
 }
 
+type AzureDisk struct {
+	DiskURI  string `json:"diskURI"`
+	DiskName string `json:"diskName"`
+}
 type Volume struct {
 	Name                 string                `json:"name"`
 	AwsElasticBlockStore *AwsElasticBlockStore `json:"awsElasticBlockStore,omitempty"`

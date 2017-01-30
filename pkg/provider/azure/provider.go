@@ -1,13 +1,27 @@
 package azure
 
 import (
+	"github.com/Azure/azure-sdk-for-go/arm/compute"
+	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/supergiant/supergiant/pkg/core"
 	"github.com/supergiant/supergiant/pkg/kubernetes"
 	"github.com/supergiant/supergiant/pkg/model"
 )
 
+// Provider Holds DO account info.
+type Provider struct {
+	Core     *core.Core
+	VMClient func(*model.Kube) *compute.VirtualMachinesClient
+}
+
 // ValidateAccount validates that the AWS credentials entered work.
 func (p *Provider) ValidateAccount(m *model.CloudAccount) error {
+	client := p.VMClient(&model.Kube{CloudAccount: m})
+
+	_, err := client.ListAll()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -65,4 +79,20 @@ func (p *Provider) CreateEntrypointListener(m *model.EntrypointListener, action 
 // DeleteEntrypointListener deletes a listener form an aws loadbalancer.
 func (p *Provider) DeleteEntrypointListener(m *model.EntrypointListener, action *core.Action) error {
 	return nil
+}
+
+func VMClient(kube *model.Kube) *compute.VirtualMachinesClient {
+	oauthConfig, err := azure.PublicCloud.OAuthConfigForTenant(kube.CloudAccount.Credentials["tenant_id"])
+	if err != nil {
+		return nil
+	}
+	token, _ := azure.NewServicePrincipalToken(
+		*oauthConfig,
+		kube.CloudAccount.Credentials["client_id"],
+		kube.CloudAccount.Credentials["client_secret"],
+		azure.PublicCloud.ResourceManagerEndpoint,
+	)
+	client := compute.NewVirtualMachinesClient(kube.CloudAccount.Credentials["subscription_id"])
+	client.Authorizer = token
+	return &client
 }

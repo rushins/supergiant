@@ -8,6 +8,7 @@ import (
 	"github.com/codegangsta/cli"
 	"github.com/supergiant/supergiant/pkg/core"
 	"github.com/supergiant/supergiant/pkg/provider/aws"
+	"github.com/supergiant/supergiant/pkg/provider/azure"
 	"github.com/supergiant/supergiant/pkg/provider/digitalocean"
 	"github.com/supergiant/supergiant/pkg/provider/gce"
 	"github.com/supergiant/supergiant/pkg/provider/openstack"
@@ -56,6 +57,12 @@ func main() {
 			return &gce.Provider{
 				Core:   c,
 				Client: gce.Client,
+			}
+		}
+		c.AZUREProvider = func(creds map[string]string) core.Provider {
+			return &azure.Provider{
+				Core:     c,
+				VMClient: azure.VMClient,
 			}
 		}
 

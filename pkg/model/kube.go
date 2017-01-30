@@ -123,3 +123,16 @@ type GCEKubeConfig struct {
 	ETCDDiscoveryURL  string `json:"etcd_discovery_url" sg:"readonly"`
 	MasterPrivateIP   string `json:"master_private_ip" sg:"readonly"`
 }
+
+type AZUREKubeConfig struct {
+	Zone            string   `json:"zone" validate:"nonzero"`
+	MasterNodes     []string `json:"master_nodes" sg:"readonly"`
+	MasterName      string   `json:"master_name" sg:"readonly"`
+	KubeMasterCount int      `json:"kube_master_count"`
+
+	// Template vars
+	SSHPubKey         string `json:"ssh_pub_key" validate:"nonzero"`
+	KubernetesVersion string `json:"kubernetes_version" validate:"nonzero" sg:"default=1.5.1"`
+	ETCDDiscoveryURL  string `json:"etcd_discovery_url" sg:"readonly"`
+	MasterPrivateIP   string `json:"master_private_ip" sg:"readonly"`
+}

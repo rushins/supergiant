@@ -162,6 +162,7 @@ coreos:
           --pod-manifest-path=/etc/kubernetes/manifests \
           --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml \
           --volume-plugin-dir=/etc/kubernetes/volumeplugins \
+          --network-plugin=cni \
           --register-node=true
         ExecStop=-/usr/bin/rkt stop --uuid-file=/var/run/kubelet-pod.uuid
         Restart=on-failure

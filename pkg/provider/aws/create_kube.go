@@ -847,6 +847,7 @@ func (p *Provider) CreateKube(m *model.Kube, action *core.Action) error {
 			if m.MasterPublicIP == "" {
 				if ip := instance.PublicIpAddress; ip != nil {
 					m.MasterPublicIP = *ip
+					m.GrafanaURL = "https://" + m.Username + ":" + m.Password + "@" + m.MasterPublicIP + "/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/"
 					if m.AWSConfig.MasterPrivateIP == "" {
 						m.AWSConfig.MasterPrivateIP = *instance.PrivateIpAddress
 					}

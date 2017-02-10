@@ -289,44 +289,50 @@ write_files:
       apiVersion: v1
       kind: ReplicationController
       metadata:
-        name: monitoring-influxdb-grafana-v2
+        name: monitoring-influxdb-grafana-v4
         namespace: kube-system
         labels:
           k8s-app: influxGrafana
-          version: v2
+          version: v4
           kubernetes.io/cluster-service: "true"
       spec:
         replicas: 1
         selector:
           k8s-app: influxGrafana
-          version: v2
+          version: v4
         template:
           metadata:
             labels:
               k8s-app: influxGrafana
-              version: v2
+              version: v4
               kubernetes.io/cluster-service: "true"
           spec:
             containers:
               - image: gcr.io/google_containers/heapster_influxdb:v0.7
                 name: influxdb
                 resources:
+                  # keep request = limit to keep this container in guaranteed class
                   limits:
                     cpu: 100m
-                    memory: 200Mi
+                    memory: 500Mi
+                  requests:
+                    cpu: 100m
+                    memory: 500Mi
                 ports:
                   - containerPort: 8083
-                    hostPort: 8083
                   - containerPort: 8086
-                    hostPort: 8086
                 volumeMounts:
                 - name: influxdb-persistent-storage
                   mountPath: /data
-              - image: beta.gcr.io/google_containers/heapster_grafana:v2.1.1
+              - image: gcr.io/google_containers/heapster_grafana:v3.1.1
                 name: grafana
                 env:
                 resources:
+                  # keep request = limit to keep this container in guaranteed class
                   limits:
+                    cpu: 100m
+                    memory: 100Mi
+                  requests:
                     cpu: 100m
                     memory: 100Mi
                 env:
@@ -348,7 +354,6 @@ write_files:
                 volumeMounts:
                 - name: grafana-persistent-storage
                   mountPath: /var
-
             volumes:
             - name: influxdb-persistent-storage
               emptyDir: {}
@@ -374,6 +379,27 @@ write_files:
           - name: api
             port: 8086
             targetPort: 8086
+        selector:
+          k8s-app: influxGrafana
+  - path: "/etc/kubernetes/addons/cluster-monitoring/grafana-service.yaml"
+    permissions: "0644"
+    owner: "root"
+    content: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: monitoring-grafana
+        namespace: kube-system
+        labels:
+          kubernetes.io/cluster-service: "true"
+          kubernetes.io/name: "Grafana"
+      spec:
+        # On production clusters, consider setting up auth for grafana, and
+        # exposing Grafana either using a LoadBalancer or a public IP.
+        # type: LoadBalancer
+        ports:
+          - port: 80
+            targetPort: 3000
         selector:
           k8s-app: influxGrafana
   - path: "/etc/kubernetes/addons/kube-dns.yaml"
@@ -539,7 +565,7 @@ write_files:
           protocol: UDP
         - name: dns-tcp
           port: 53
-          protocol: TCP      
+          protocol: TCP
   - path: "/etc/kubernetes/addons/kube-dns-autoscaler.yaml"
     permissions: "0644"
     owner: "root"

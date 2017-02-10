@@ -35,6 +35,8 @@ type Kube struct {
 	Username string `json:"username" validate:"nonzero" sg:"immutable"`
 	Password string `json:"password" validate:"nonzero" sg:"immutable"`
 
+	GrafanaURL string `json:"grafana_url" sg:"immutable"`
+
 	HeapsterVersion          string `json:"heapster_version" validate:"nonzero" sg:"default=v1.2.0,immutable"`
 	HeapsterMetricResolution string `json:"heapster_metric_resolution" validate:"regexp=^([0-9]+[smhd])+$" sg:"default=20s,immutable"`
 

@@ -12,6 +12,7 @@ import (
 	"github.com/supergiant/supergiant/pkg/provider/gce"
 	"github.com/supergiant/supergiant/pkg/provider/kubernetes"
 	"github.com/supergiant/supergiant/pkg/provider/openstack"
+	"github.com/supergiant/supergiant/pkg/provider/packet"
 	"github.com/supergiant/supergiant/pkg/server"
 )
 
@@ -57,6 +58,12 @@ func main() {
 			return &gce.Provider{
 				Core:   c,
 				Client: gce.Client,
+			}
+		}
+		c.PACKProvider = func(creds map[string]string) core.Provider {
+			return &packet.Provider{
+				Core:   c,
+				Client: packet.Client,
 			}
 		}
 

@@ -1,0 +1,21 @@
+Issue: Cloud Credentials using OpenStackuser to connect  Supergiant 
+I get while  creating openstack cloud user: 
+Validation failed: You must provide exactly one of DomainID or DomainName to authenticate by Username" while using Cloud Credentials using OpenStackuser to connect  Supergiant  
+Validation failed: Credentials: zero value
+------------------------
+Here are my credentials for openstack cloud user 
+----------------
+
+{
+  "credentials": {
+    "identity_endpoint": "http://ostack1:5000/v3/",
+    "password": "admin",
+    "tenant_id": "a219361991204643b5fd6553cf850423",
+    "username": "admin"
+  },
+  "name": "glds openstack",
+  "provider": "openstack"
+}
+------------
+BR
+Rushi
